@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.prototype.exam.data.model.forecast.ForecastItem
 
 @Dao
-interface ForecastDao {
+interface UserDao {
     @Query("SELECT * FROM forecast ORDER BY id")
     fun getAllLiveForecasts(): LiveData<List<ForecastItem>>
 

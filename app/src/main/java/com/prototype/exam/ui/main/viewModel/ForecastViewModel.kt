@@ -3,8 +3,8 @@ package com.prototype.exam.ui.main.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prototype.exam.data.model.ForecastItem
-import com.prototype.exam.data.repository.MainRepository
+import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.repository.Repository
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 class ForecastViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
+    private val repository: Repository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
 
@@ -28,7 +28,7 @@ class ForecastViewModel @Inject constructor(
     }
 
     fun getLiveLocalForecasts(): LiveData<List<ForecastItem>> {
-        return mainRepository.getLiveLocalForecasts()
+        return repository.getLiveLocalForecasts()
     }
 
     fun fetchForecasts() {
@@ -38,10 +38,10 @@ class ForecastViewModel @Inject constructor(
                 withContext(Dispatchers.IO) {
                     val locationList = LOCATION_LIST.joinToString(separator = ",")
                     try {
-                        val response = mainRepository.getForecasts(locationList)
+                        val response = repository.getForecasts(locationList)
                         if (response.isSuccessful) {
                             response.body()?.let { remoteResponse ->
-                                val localForecasts = mainRepository.getLocalForecasts()
+                                val localForecasts = repository.getLocalForecasts()
                                 val remoteForecasts = remoteResponse.forecastList
 
                                 localForecasts.map { localForecastItem ->
@@ -49,7 +49,7 @@ class ForecastViewModel @Inject constructor(
                                         localForecastItem.id.equals(it.id, ignoreCase = true)
                                     }?.let { it.favorite = localForecastItem.favorite }
                                 }
-                                mainRepository.addForecasts(remoteForecasts)
+                                repository.addForecasts(remoteForecasts)
                                 forecast.postValue(Result.success(remoteForecasts))
                             }
                         } else {

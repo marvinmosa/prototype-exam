@@ -1,7 +1,7 @@
 package com.prototype.exam.data.api
 
-import com.prototype.exam.data.model.ForecastItem
-import com.prototype.exam.data.model.ForecastResponse
+import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.model.forecast.ForecastResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

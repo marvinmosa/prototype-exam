@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.App
 import com.prototype.exam.R
-import com.prototype.exam.data.model.ForecastItem
+import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.FragmentForecastDetailBinding
-import com.prototype.exam.di.module.ViewModelFactory
+import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.viewModel.ForecastDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID

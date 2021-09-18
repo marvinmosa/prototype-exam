@@ -1,12 +1,13 @@
 package com.prototype.exam.ui.main.adapter
 
 import android.content.res.Resources
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prototype.exam.R
-import com.prototype.exam.data.model.ForecastItem
+import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.ItemLayoutBinding
 import com.prototype.exam.ui.main.adapter.MainAdapter.DataViewHolder
 import java.text.DecimalFormat
@@ -69,15 +70,33 @@ class MainAdapter(private val users: ArrayList<ForecastItem>, private val listen
 
     private fun getColor(temperature: Double, resources: Resources): Int = when {
         temperature < 0 -> {
-            resources.getColor(R.color.freezing, null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                resources.getColor(R.color.freezing, null)
+            } else {
+                resources.getColor(R.color.freezing)
+            }
         }
         temperature >= 0 && temperature < 15 -> {
-            resources.getColor(R.color.cold, null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                resources.getColor(R.color.cold, null)
+            } else {
+                resources.getColor(R.color.cold)
+            }
         }
         temperature >= 15 && temperature < 30 -> {
-            resources.getColor(R.color.warm, null)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                resources.getColor(R.color.warm, null)
+            } else {
+                resources.getColor(R.color.warm)
+            }
         }
-        else -> resources.getColor(R.color.hot, null)
+        else -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                resources.getColor(R.color.hot, null)
+            } else {
+                resources.getColor(R.color.hot)
+            }
+        }
     }
 
     interface OnItemClickListener {

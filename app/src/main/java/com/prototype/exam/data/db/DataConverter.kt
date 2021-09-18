@@ -3,7 +3,7 @@ package com.prototype.exam.data.db
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.prototype.exam.data.model.WeatherItem
+import com.prototype.exam.data.model.forecast.WeatherItem
 import java.lang.reflect.Type
 
 

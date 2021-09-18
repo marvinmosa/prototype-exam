@@ -3,8 +3,10 @@ package com.prototype.exam.ui.main.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prototype.exam.data.model.ForecastItem
-import com.prototype.exam.data.repository.MainRepository
+import com.prototype.exam.data.model.User
+import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.repository.Repository
+import com.prototype.exam.data.repository.RepositoryImpl
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
@@ -15,14 +17,34 @@ import javax.inject.Inject
 
 
 class ForecastDetailViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
+    private val repository: Repository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
 
+    init {
+        fetchData()
+    }
 
     private val forecast = MutableLiveData<Result<ForecastItem>>()
     val forecasts: LiveData<Result<ForecastItem>>
         get() = forecast
+
+    private val _users = MutableLiveData<Result<User>>()
+    val users: LiveData<Result<User>>
+        get() = _users
+
+    fun fetchData() {
+        viewModelScope.launch {
+            if (!networkHelper.isNetworkConnected()) {
+                 forecast.postValue(Result.error(null, "No internet connection"))
+            }
+            withContext(Dispatchers.IO) {
+
+            }
+
+        }
+    }
+
 
 
     fun fetchForecast(locationId: String?) {
@@ -32,13 +54,13 @@ class ForecastDetailViewModel @Inject constructor(
                 if (networkHelper.isNetworkConnected()) {
                     withContext(Dispatchers.IO) {
                         try {
-                            val response = mainRepository.getForecast(it)
+                            val response = repository.getForecast(it)
                             if (response.isSuccessful) {
                                 val localForecastItem =
-                                    mainRepository.getLocalForecast(locationId.toInt())
+                                    repository.getLocalForecast(locationId.toInt())
                                 response.body()?.let {
                                     it.favorite = localForecastItem.favorite
-                                    mainRepository.addForecast(it)
+                                    repository.addForecast(it)
                                     forecast.postValue(Result.success(it))
                                 }
                             } else forecast.postValue(
@@ -61,7 +83,7 @@ class ForecastDetailViewModel @Inject constructor(
     fun onToggleFavorite(locationId: String?, hasToggled: Boolean) {
         locationId?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                mainRepository.updateForecastFavorite(it, hasToggled)
+                repository.updateForecastFavorite(it, hasToggled)
             }
         }
     }

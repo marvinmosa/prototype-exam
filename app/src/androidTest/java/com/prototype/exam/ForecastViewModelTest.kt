@@ -2,9 +2,9 @@ package com.prototype.exam
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.prototype.exam.data.model.ForecastItem
-import com.prototype.exam.data.model.ForecastResponse
-import com.prototype.exam.data.repository.MainRepository
+import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.model.forecast.ForecastResponse
+import com.prototype.exam.data.repository.RepositoryImpl
 import com.prototype.exam.ui.main.viewModel.ForecastViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
@@ -28,12 +28,12 @@ class ForecastViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    lateinit var mainRepository: MainRepository
+    lateinit var mainRepository: RepositoryImpl
 
 
     @Before
     fun setUp() {
-        mainRepository = mock(MainRepository::class.java)
+        mainRepository = mock(RepositoryImpl::class.java)
         networkHelper = mock(NetworkHelper::class.java)
         response = mock(Response::class.java) as Response<ForecastResponse>
         apiForecastObserver = mock(Observer::class.java) as Observer<Result<List<ForecastItem>>>

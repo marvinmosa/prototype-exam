@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.ui.main.viewModel.ForecastDetailViewModel
 import com.prototype.exam.ui.main.viewModel.ForecastViewModel
+import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.utils.ViewModelKey
 import dagger.Binds
 import dagger.Module

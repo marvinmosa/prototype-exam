@@ -1,4 +1,4 @@
-package com.prototype.exam.di.module
+package com.prototype.exam.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

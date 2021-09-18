@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
-import com.prototype.exam.data.model.ForecastItem
+import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.FragmentForecastBinding
-import com.prototype.exam.di.module.ViewModelFactory
+import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.ui.main.adapter.MainAdapter

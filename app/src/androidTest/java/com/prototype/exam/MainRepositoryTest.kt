@@ -5,9 +5,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.prototype.exam.data.api.ApiHelper
 import com.prototype.exam.data.db.AppDatabase
-import com.prototype.exam.data.model.ForecastItem
-import com.prototype.exam.data.model.Main
-import com.prototype.exam.data.repository.MainRepository
+import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.model.forecast.Main
+import com.prototype.exam.data.repository.Repository
+import com.prototype.exam.data.repository.RepositoryImpl
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -17,7 +18,7 @@ import org.mockito.Mockito
 @RunWith(AndroidJUnit4::class)
 class MainRepositoryTest {
 
-    private lateinit var mainRepository: MainRepository
+    private lateinit var mainRepository: Repository
 
     private lateinit var appDatabase: AppDatabase
 
@@ -28,7 +29,7 @@ class MainRepositoryTest {
             InstrumentationRegistry.getInstrumentation().targetContext,
             AppDatabase::class.java).build()
         val apiHelper = Mockito.mock(ApiHelper::class.java)
-        mainRepository = MainRepository(apiHelper, appDatabase.forecastDao())
+        mainRepository = RepositoryImpl(apiHelper, appDatabase.forecastDao())
     }
 
     @Test
