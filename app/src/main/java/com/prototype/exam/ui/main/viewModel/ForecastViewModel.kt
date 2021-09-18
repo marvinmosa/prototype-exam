@@ -53,17 +53,14 @@ class ForecastViewModel @Inject constructor(
                                 forecast.postValue(Result.success(remoteForecasts))
                             }
                         } else {
-                            triggerErrorEvent(response.message().toString())
-//                            forecast.postValue(Result.error(null, response.message().toString()))
+                            forecast.postValue(Result.error(null, response.message().toString()))
                         }
                     } catch (e: Exception) {
-                        triggerErrorEvent(e.message.toString())
-//                        forecast.postValue(Result.error(null, e.message.toString()))
+                        forecast.postValue(Result.error(null, e.message.toString()))
                     }
                 }
             } else {
-                triggerErrorEvent("No internet connection")
-//                forecast.postValue(Result.error(null, "No internet connection"))
+                forecast.postValue(Result.error(null, "No internet connection"))
             }
         }
     }

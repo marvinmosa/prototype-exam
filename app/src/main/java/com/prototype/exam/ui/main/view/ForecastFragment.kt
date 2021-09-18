@@ -22,6 +22,7 @@ import com.prototype.exam.ui.main.viewModel.ForecastViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID
 import com.prototype.exam.utils.Status
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.OnItemClickListener {
@@ -71,29 +72,30 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
             retrieveList(it)
         })
 
-        viewModel.forecasts.observe(requireActivity(), {
+        viewModel.forecasts.observe(requireActivity(), { it ->
             it?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
                         binding.swipeRefresh.isRefreshing = false
                         result.data?.let { response -> retrieveList(response) }
                     }
-//                    Status.ERROR -> {
-//                        binding.swipeRefresh.isRefreshing = false
-//                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-//                    }
-//                    Status.LOADING -> {
-//                        binding.swipeRefresh.isRefreshing = true
-//                    }
-                    else -> binding.swipeRefresh.isRefreshing = true
+                    Status.ERROR -> {
+                        binding.swipeRefresh.isRefreshing = false
+                        it.message?.let {
+                            triggerErrorEvent(it) }
+
+                    }
+                    Status.LOADING -> {
+                        binding.swipeRefresh.isRefreshing = true
+                    }
                 }
             }
         })
 
         lifecycleScope.launchWhenStarted {
-            viewModel.eventFlow.collect { event ->
+            eventFlow.collect { event ->
                 when (event) {
-                    is BaseViewModel.SingleEvent.ErrorEvent -> {
+                    is SingleEvent.ErrorEvent -> {
                         binding.swipeRefresh.isRefreshing = false
                         Snackbar.make(binding.root, event.message, Snackbar.LENGTH_LONG).show()
                     }
@@ -123,5 +125,9 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
             R.id.action_ForecastFragment_to_ForecastDetailFragment,
             bundle
         )
+    }
+
+    override fun triggerErrorEvent(message: String) = lifecycleScope.launch {
+        eventChannel.send(SingleEvent.ErrorEvent(message))
     }
 }

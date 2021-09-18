@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.forecast.ForecastItem
@@ -19,6 +20,7 @@ import com.prototype.exam.utils.FormatterUtils.HI_TEMPERATURE_FORMAT
 import com.prototype.exam.utils.FormatterUtils.LOW_TEMPERATURE_FORMAT
 import com.prototype.exam.utils.FormatterUtils.getTemperature
 import com.prototype.exam.utils.Status
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
@@ -88,5 +90,9 @@ class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
         )
         binding.textWeather.text = forecast.weatherList[0].weather
         binding.btnFavorite.isChecked = forecast.favorite
+    }
+
+    override fun triggerErrorEvent(message: String) = lifecycleScope.launch {
+        eventChannel.send(SingleEvent.ErrorEvent(message))
     }
 }
