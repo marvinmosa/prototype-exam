@@ -13,6 +13,10 @@
 
         <action
             android:id="@+id/action_ForecastFragment_to_ForecastDetailFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
             app:destination="@id/ForecastDetailFragment" />
     </fragment>
     <fragment
@@ -23,6 +27,10 @@
 
         <action
             android:id="@+id/action_ForecastDetailFragment_to_ForecastFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
             app:destination="@id/ForecastFragment" />
     </fragment>
 </navigation>
