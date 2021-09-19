@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
+import com.prototype.exam.data.model.User
 import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.FragmentUserBinding
 import com.prototype.exam.ui.base.BaseFragment
@@ -55,7 +56,7 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     }
 
     override fun setupUi() {
-        binding.swipeRefresh.setOnRefreshListener { viewModel.fetchForecasts() }
+        binding.swipeRefresh.setOnRefreshListener { viewModel.fetchUsers() }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = MainAdapter(arrayListOf(), this)
         binding.recyclerView.addItemDecoration(
@@ -68,11 +69,11 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     }
 
     override fun setupObservers() {
-        viewModel.getLiveLocalForecasts().observe(requireActivity(), {
+        viewModel.getLiveLocalUsers().observe(requireActivity(), {
             retrieveList(it)
         })
 
-        viewModel.forecasts.observe(requireActivity(), { it ->
+        viewModel.users.observe(requireActivity(), { it ->
             it?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
@@ -82,7 +83,8 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
                     Status.ERROR -> {
                         binding.swipeRefresh.isRefreshing = false
                         it.message?.let {
-                            triggerErrorEvent(it) }
+                            triggerErrorEvent(it)
+                        }
 
                     }
                     Status.LOADING -> {
@@ -104,10 +106,9 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
         }
     }
 
-    private fun retrieveList(forecasts: List<ForecastItem>) {
+    private fun retrieveList(users: List<User>) {
         adapter.apply {
-            addUsers(forecasts)
-            notifyDataSetChanged()
+            addUsers(users)
         }
     }
 
@@ -118,9 +119,9 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
 
 
     override fun onItemClick(position: Int) {
-        val forecast = adapter.getItem(position)
+        val user = adapter.getItem(position)
         val bundle = Bundle()
-        bundle.putString(BUNDLE_LOCATION_ID, forecast.id)
+        bundle.putString(BUNDLE_LOCATION_ID, user.id.toString())
         findNavController().navigate(
             R.id.action_UserFragment_to_UserDetailFragment,
             bundle

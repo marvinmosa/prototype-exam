@@ -30,7 +30,9 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField 'String', 'BASE_URL', "\"https://api.openweathermap.org/data/2.5/\""
+        //buildConfigField 'String', 'BASE_URL', "\"https://api.openweathermap.org/data/2.5/\""
+        buildConfigField 'String', 'BASE_URL', "\"https://jsonplaceholder.typicode.com/\""
+
     }
 
     buildTypes {

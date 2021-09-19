@@ -3,7 +3,7 @@ package com.prototype.exam.ui.main.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.prototype.exam.data.model.forecast.ForecastItem
+import com.prototype.exam.data.model.User
 import com.prototype.exam.data.repository.UserRepository
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.utils.NetworkHelper
@@ -18,54 +18,42 @@ class UserViewModel @Inject constructor(
     private val repository: UserRepository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
-
-    private val forecast = MutableLiveData<Result<List<ForecastItem>>>()
-    val forecasts: LiveData<Result<List<ForecastItem>>>
-        get() = forecast
+    private val _users = MutableLiveData<Result<List<User>>>()
+    val users: LiveData<Result<List<User>>>
+        get() = _users
 
     init {
-        fetchForecasts()
+        fetchUsers()
     }
 
-    fun getLiveLocalForecasts(): LiveData<List<ForecastItem>> {
-        return repository.getLiveLocalForecasts()
-    }
-
-    fun fetchForecasts() {
+    internal fun fetchUsers() {
         viewModelScope.launch {
-            forecast.postValue(Result.loading(null))
-            if (networkHelper.isNetworkConnected()) {
+            _users.postValue(Result.loading(null))
+            if (!networkHelper.isNetworkConnected()) {
+                _users.postValue(Result.error(null, "No internet connection"))
+            } else {
                 withContext(Dispatchers.IO) {
-                    val locationList = LOCATION_LIST.joinToString(separator = ",")
                     try {
-                        val response = repository.getForecasts(locationList)
+                        val response = repository.getUsers()
                         if (response.isSuccessful) {
-                            response.body()?.let { remoteResponse ->
-                                val localForecasts = repository.getLocalForecasts()
-                                val remoteForecasts = remoteResponse.forecastList
-
-                                localForecasts.map { localForecastItem ->
-                                    remoteForecasts.firstOrNull {
-                                        localForecastItem.id.equals(it.id, ignoreCase = true)
-                                    }?.let { it.favorite = localForecastItem.favorite }
-                                }
-                                repository.addForecasts(remoteForecasts)
-                                forecast.postValue(Result.success(remoteForecasts))
+                            response.body()?.let {
+                                repository.addUsers(it)
+                                _users.postValue(Result.success(it))
                             }
                         } else {
-                            forecast.postValue(Result.error(null, response.message().toString()))
+                            System.out.println(response.message().toString())
+                            _users.postValue(Result.error(null, response.message().toString()))
                         }
                     } catch (e: Exception) {
-                        forecast.postValue(Result.error(null, e.message.toString()))
+                        System.out.println(e.message.toString())
+                        _users.postValue(Result.error(null, e.message.toString()))
                     }
                 }
-            } else {
-                forecast.postValue(Result.error(null, "No internet connection"))
             }
         }
     }
 
-    companion object {
-        val LOCATION_LIST = listOf("1701668", "1835848", "3067696")
+    fun getLiveLocalUsers(): LiveData<List<User>> {
+        return repository.getLocalUsers()
     }
 }

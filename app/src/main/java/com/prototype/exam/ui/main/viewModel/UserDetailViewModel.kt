@@ -46,44 +46,5 @@ class UserDetailViewModel @Inject constructor(
 
 
 
-    fun fetchForecast(locationId: String?) {
-        locationId?.let {
-            viewModelScope.launch {
-                forecast.postValue(Result.loading(null))
-                if (networkHelper.isNetworkConnected()) {
-                    withContext(Dispatchers.IO) {
-                        try {
-                            val response = repository.getForecast(it)
-                            if (response.isSuccessful) {
-                                val localForecastItem =
-                                    repository.getLocalForecast(locationId.toInt())
-                                response.body()?.let {
-                                    it.favorite = localForecastItem.favorite
-                                    repository.addForecast(it)
-                                    forecast.postValue(Result.success(it))
-                                }
-                            } else forecast.postValue(
-                                Result.error(
-                                    null,
-                                    response.message().toString()
-                                )
-                            )
-                        } catch (e: Exception) {
-                            forecast.postValue(Result.error(null, e.message.toString()))
-                        }
-                    }
-                } else forecast.postValue(Result.error(null, "No internet connection"))
-            }
-        } ?: kotlin.run {
-            forecast.postValue(Result.error(null, "Invalid City Id"))
-        }
-    }
 
-    fun onToggleFavorite(locationId: String?, hasToggled: Boolean) {
-        locationId?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                repository.updateForecastFavorite(it, hasToggled)
-            }
-        }
-    }
 }

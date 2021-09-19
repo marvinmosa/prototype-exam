@@ -7,9 +7,13 @@ import com.prototype.exam.ui.main.view.login.data.model.LoggedInUser
 import com.prototype.exam.utils.Constants.SHARED_PREFERENCE_LOGIN_KEY
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(private val dao: LoginDao, private val sharedPref: SharedPreferences) : LoginRepository {
+class LoginRepositoryImpl @Inject constructor(
+    private val dao: LoginDao,
+    private val sharedPref: SharedPreferences
+) : LoginRepository {
 
     private val _loginSharedPref = sharedPref
+
     // in-memory cache of the loggedInUser object
     private var _user: String? = null
         private set

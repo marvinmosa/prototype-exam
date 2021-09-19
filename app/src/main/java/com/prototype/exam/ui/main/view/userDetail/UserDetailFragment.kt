@@ -43,7 +43,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
         viewBinding = FragmentUserDetailBinding.inflate(inflater, container, false)
         val view = binding.root
         locationId = arguments?.getString(BUNDLE_LOCATION_ID)
-        viewModel.fetchForecast(locationId)
+       // viewModel.fetchForecast(locationId)
         setupUi()
         setupObservers()
         return view
@@ -56,7 +56,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
 
     override fun setupUi() {
         binding.btnFavorite.setOnClickListener {
-            viewModel.onToggleFavorite(locationId, binding.btnFavorite.isChecked)
+         //   viewModel.onToggleFavorite(locationId, binding.btnFavorite.isChecked)
         }
     }
 

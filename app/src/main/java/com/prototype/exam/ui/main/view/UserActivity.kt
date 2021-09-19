@@ -47,7 +47,7 @@ class UserActivity : BaseActivity() {
         val sharedPref = baseContext?.getSharedPreferences(Constants.SHARED_PREFERENCE_LOGIN, MODE_PRIVATE)
         sharedPref?.let { it.edit().putString(Constants.SHARED_PREFERENCE_LOGIN_KEY, null).apply()  }
         startActivity(Intent(this, LoginActivity::class.java))
-       // overridePendingTransition(R.anim.slide_out, R.anim.slide_in)
+        finish()
         return true
     }
 }
