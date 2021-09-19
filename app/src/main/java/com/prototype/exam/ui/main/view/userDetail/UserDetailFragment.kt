@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view
+package com.prototype.exam.ui.main.view.userDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,10 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.forecast.ForecastItem
-import com.prototype.exam.databinding.FragmentForecastDetailBinding
+import com.prototype.exam.databinding.FragmentUserDetailBinding
 import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.ui.base.BaseFragment
-import com.prototype.exam.ui.main.viewModel.ForecastDetailViewModel
+import com.prototype.exam.ui.main.view.UserActivity
+import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID
 import com.prototype.exam.utils.FormatterUtils.CURRENT_TEMPERATURE_FORMAT
 import com.prototype.exam.utils.FormatterUtils.HI_TEMPERATURE_FORMAT
@@ -23,12 +24,12 @@ import com.prototype.exam.utils.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
+class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
 
     @Inject
     lateinit  var viewModelFactory: ViewModelFactory
-    lateinit  var viewModel: ForecastDetailViewModel
-    private var viewBinding: FragmentForecastDetailBinding? = null
+    lateinit  var viewModel: UserDetailViewModel
+    private var viewBinding: FragmentUserDetailBinding? = null
     private val binding get() = viewBinding!!
     private var locationId: String? = null
 
@@ -38,8 +39,8 @@ class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
         savedInstanceState: Bundle?
     ): View {
         App.appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ForecastDetailViewModel::class.java)
-        viewBinding = FragmentForecastDetailBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserDetailViewModel::class.java)
+        viewBinding = FragmentUserDetailBinding.inflate(inflater, container, false)
         val view = binding.root
         locationId = arguments?.getString(BUNDLE_LOCATION_ID)
         viewModel.fetchForecast(locationId)
@@ -50,7 +51,7 @@ class ForecastDetailFragment : BaseFragment(R.layout.fragment_forecast_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).onShowBackButton(true)
+        (activity as UserActivity).onShowBackButton(true)
     }
 
     override fun setupUi() {

@@ -2,8 +2,8 @@ package com.prototype.exam.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.prototype.exam.ui.main.viewModel.ForecastDetailViewModel
-import com.prototype.exam.ui.main.viewModel.ForecastViewModel
+import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
+import com.prototype.exam.ui.main.viewModel.UserViewModel
 import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.utils.ViewModelKey
 import dagger.Binds
@@ -14,13 +14,13 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule {
     @Binds
     @IntoMap
-    @ViewModelKey(ForecastViewModel::class)
-    internal abstract fun bindForecastViewModel(viewModel: ForecastViewModel): ViewModel
+    @ViewModelKey(UserViewModel::class)
+    internal abstract fun bindForecastViewModel(viewModel: UserViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ForecastDetailViewModel::class)
-    internal abstract fun bindForecastDetailViewModel(viewModel: ForecastDetailViewModel): ViewModel
+    @ViewModelKey(UserDetailViewModel::class)
+    internal abstract fun bindForecastDetailViewModel(viewModel: UserDetailViewModel): ViewModel
 
 
     @Binds

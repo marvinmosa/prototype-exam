@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeCreditExam">
         <activity
-            android:name="com.prototype.exam.ui.main.view.MainActivity"
+            android:name="com.prototype.exam.ui.main.view.UserActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProtypeExam.NoActionBar">
             <intent-filter>

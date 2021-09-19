@@ -1,9 +1,9 @@
 package com.prototype.exam.di.component
 
 import com.prototype.exam.di.module.*
-import com.prototype.exam.ui.main.view.ForecastDetailFragment
-import com.prototype.exam.ui.main.view.ForecastFragment
-import com.prototype.exam.ui.main.view.MainActivity
+import com.prototype.exam.ui.main.view.userDetail.UserDetailFragment
+import com.prototype.exam.ui.main.view.user.UserFragment
+import com.prototype.exam.ui.main.view.UserActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,9 +15,9 @@ import javax.inject.Singleton
     RepositoryModule::class,
     DatabaseModule::class])
 interface AppComponent {
-    fun inject(mainActivity: MainActivity)
+    fun inject(mainActivity: UserActivity)
 
-    fun inject(forecastDetailFragment: ForecastDetailFragment)
+    fun inject(forecastDetailFragment: UserDetailFragment)
 
-    fun inject(forecastFragment: ForecastFragment)
+    fun inject(forecastFragment: UserFragment)
 }

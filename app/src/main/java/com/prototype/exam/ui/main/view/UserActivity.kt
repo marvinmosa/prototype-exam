@@ -6,7 +6,7 @@ import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.ui.base.BaseActivity
 
-class MainActivity : BaseActivity() {
+class UserActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

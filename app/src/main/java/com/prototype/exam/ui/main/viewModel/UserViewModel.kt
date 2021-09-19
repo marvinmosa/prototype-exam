@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class ForecastViewModel @Inject constructor(
+class UserViewModel @Inject constructor(
     private val repository: Repository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {

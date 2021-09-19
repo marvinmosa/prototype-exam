@@ -3,34 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ForecastFragment">
+    app:startDestination="@id/UserFragment">
 
     <fragment
-        android:id="@+id/ForecastFragment"
-        android:name="com.prototype.exam.ui.main.view.ForecastFragment"
+        android:id="@+id/UserFragment"
+        android:name="com.prototype.exam.ui.main.view.user.UserFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_forecast">
+        tools:layout="@layout/fragment_user">
 
         <action
-            android:id="@+id/action_ForecastFragment_to_ForecastDetailFragment"
+            android:id="@+id/action_UserFragment_to_UserDetailFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/slide_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"
-            app:destination="@id/ForecastDetailFragment" />
+            app:destination="@id/UserDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/ForecastDetailFragment"
-        android:name="com.prototype.exam.ui.main.view.ForecastDetailFragment"
+        android:id="@+id/UserDetailFragment"
+        android:name="com.prototype.exam.ui.main.view.userDetail.UserDetailFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_forecast_detail">
+        tools:layout="@layout/fragment_user_detail">
 
         <action
-            android:id="@+id/action_ForecastDetailFragment_to_ForecastFragment"
+            android:id="@+id/action_UserDetailFragment_to_UserFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/slide_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"
-            app:destination="@id/ForecastFragment" />
+            app:destination="@id/UserFragment" />
     </fragment>
 </navigation>

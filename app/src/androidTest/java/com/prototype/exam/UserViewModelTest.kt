@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.data.model.forecast.ForecastResponse
 import com.prototype.exam.data.repository.RepositoryImpl
-import com.prototype.exam.ui.main.viewModel.ForecastViewModel
+import com.prototype.exam.ui.main.viewModel.UserViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ import retrofit2.Response
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class ForecastViewModelTest {
+class UserViewModelTest {
 
     @get:Rule
     val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
@@ -58,7 +58,7 @@ class ForecastViewModelTest {
                 .`when`(networkHelper)
                 .isNetworkConnected()
 
-            val forecastViewModel = ForecastViewModel(mainRepository, networkHelper)
+            val forecastViewModel = UserViewModel(mainRepository, networkHelper)
 
             forecastViewModel.forecasts.observeForever(apiForecastObserver)
             verify(mainRepository).getForecasts("1701668,1835848,3067696", "metric", "8beca4dc58974504cca73181ee8ca127")
@@ -75,7 +75,7 @@ class ForecastViewModelTest {
                 .`when`(networkHelper)
                 .isNetworkConnected()
 
-            val forecastViewModel = ForecastViewModel(mainRepository, networkHelper)
+            val forecastViewModel = UserViewModel(mainRepository, networkHelper)
             forecastViewModel.forecasts.observeForever(apiForecastObserver)
             verify(apiForecastObserver).onChanged(Result.error(null, "No internet connection"))
             forecastViewModel.forecasts.removeObserver(apiForecastObserver)

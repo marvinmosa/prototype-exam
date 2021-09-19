@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view
+package com.prototype.exam.ui.main.view.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,26 +13,26 @@ import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.forecast.ForecastItem
-import com.prototype.exam.databinding.FragmentForecastBinding
+import com.prototype.exam.databinding.FragmentUserBinding
 import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.ui.base.BaseFragment
-import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.ui.main.adapter.MainAdapter
-import com.prototype.exam.ui.main.viewModel.ForecastViewModel
+import com.prototype.exam.ui.main.view.UserActivity
+import com.prototype.exam.ui.main.viewModel.UserViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID
 import com.prototype.exam.utils.Status
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.OnItemClickListener {
+class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    lateinit var viewModel: ForecastViewModel
+    lateinit var viewModel: UserViewModel
     private lateinit var adapter: MainAdapter
 
-    private var viewBinding: FragmentForecastBinding? = null
+    private var viewBinding: FragmentUserBinding? = null
     private val binding get() = viewBinding!!
 
     override fun onCreateView(
@@ -41,8 +41,8 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
         savedInstanceState: Bundle?
     ): View {
         App.appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ForecastViewModel::class.java)
-        viewBinding = FragmentForecastBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
+        viewBinding = FragmentUserBinding.inflate(inflater, container, false)
         val view = binding.root
         setupUi()
         setupObservers()
@@ -51,7 +51,7 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).onShowBackButton(false)
+        (activity as UserActivity).onShowBackButton(false)
     }
 
     override fun setupUi() {
@@ -122,7 +122,7 @@ class ForecastFragment : BaseFragment(R.layout.fragment_forecast), MainAdapter.O
         val bundle = Bundle()
         bundle.putString(BUNDLE_LOCATION_ID, forecast.id)
         findNavController().navigate(
-            R.id.action_ForecastFragment_to_ForecastDetailFragment,
+            R.id.action_UserFragment_to_UserDetailFragment,
             bundle
         )
     }

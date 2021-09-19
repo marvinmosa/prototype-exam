@@ -16,14 +16,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class ForecastDetailViewModel @Inject constructor(
+class UserDetailViewModel @Inject constructor(
     private val repository: Repository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
 
-    init {
-        fetchData()
-    }
+//    init {
+//        fetchData()
+//    }
 
     private val forecast = MutableLiveData<Result<ForecastItem>>()
     val forecasts: LiveData<Result<ForecastItem>>
