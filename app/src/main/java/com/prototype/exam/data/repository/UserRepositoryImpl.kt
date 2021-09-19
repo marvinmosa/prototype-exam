@@ -29,4 +29,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun addUser(user: User) {
         TODO("Not yet implemented")
     }
+
+    override fun getUser(id: Int): User {
+        return dao.getUser(id)
+    }
 }

@@ -11,4 +11,5 @@ interface UserRepository {
     fun getLocalUsers(): LiveData<List<User>>
     fun addUsers(list: List<User>)
     fun addUser(user: User)
+    fun getUser(id: Int): User
 }

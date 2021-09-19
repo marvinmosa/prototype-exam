@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.prototype.exam.data.model.User
+import com.prototype.exam.data.model.forecast.ForecastItem
 
 @Dao
 interface UserDao {
@@ -17,4 +18,7 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addUsers(list: List<User>)
+
+    @Query("SELECT * FROM user WHERE id = :id")
+    fun getUser(id: Int): User
 }
