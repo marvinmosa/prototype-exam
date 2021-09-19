@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">User Locator</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Forecast Fragment</string>

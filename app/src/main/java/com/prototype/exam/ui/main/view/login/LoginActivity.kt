@@ -73,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 startActivity(Intent(this, UserActivity::class.java))
+               // overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
                 updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)

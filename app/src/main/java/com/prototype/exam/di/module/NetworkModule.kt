@@ -5,8 +5,6 @@ import com.prototype.exam.BuildConfig
 import com.prototype.exam.data.api.ApiHelper
 import com.prototype.exam.data.api.ApiHelperImpl
 import com.prototype.exam.data.api.ApiService
-import com.prototype.exam.data.db.ForecastDao
-import com.prototype.exam.data.repository.RepositoryImpl
 import com.prototype.exam.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides

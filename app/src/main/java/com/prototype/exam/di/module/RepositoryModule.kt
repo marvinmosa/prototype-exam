@@ -6,8 +6,8 @@ import com.prototype.exam.data.db.ForecastDao
 import com.prototype.exam.data.db.LoginDao
 import com.prototype.exam.data.repository.LoginRepository
 import com.prototype.exam.data.repository.LoginRepositoryImpl
-import com.prototype.exam.data.repository.Repository
-import com.prototype.exam.data.repository.RepositoryImpl
+import com.prototype.exam.data.repository.UserRepository
+import com.prototype.exam.data.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun provideRepository(apiHelper: ApiHelper, dao: ForecastDao) : Repository = RepositoryImpl(apiHelper, dao )
+    fun provideRepository(apiHelper: ApiHelper, dao: ForecastDao) : UserRepository = UserRepositoryImpl(apiHelper, dao )
 
     @Singleton
     @Provides

@@ -5,7 +5,7 @@ import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.data.model.forecast.ForecastResponse
 import retrofit2.Response
 
-interface Repository {
+interface UserRepository {
     suspend fun getForecasts(id: String, unit: String = API_UNIT, appId: String = API_APP_ID) : Response<ForecastResponse>
 
     suspend fun getForecast(id: String, unit: String = API_UNIT, appId: String = API_APP_ID): Response<ForecastItem>

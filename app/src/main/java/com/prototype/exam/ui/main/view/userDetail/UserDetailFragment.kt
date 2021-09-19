@@ -11,7 +11,6 @@ import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.FragmentUserDetailBinding
-import com.prototype.exam.utils.ViewModelFactory
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.view.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
@@ -21,6 +20,7 @@ import com.prototype.exam.utils.FormatterUtils.HI_TEMPERATURE_FORMAT
 import com.prototype.exam.utils.FormatterUtils.LOW_TEMPERATURE_FORMAT
 import com.prototype.exam.utils.FormatterUtils.getTemperature
 import com.prototype.exam.utils.Status
+import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

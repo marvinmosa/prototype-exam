@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.prototype.exam.data.model.forecast.ForecastItem
-import com.prototype.exam.data.repository.Repository
+import com.prototype.exam.data.repository.UserRepository
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 class UserViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repository: UserRepository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
 

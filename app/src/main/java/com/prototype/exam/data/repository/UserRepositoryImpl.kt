@@ -9,7 +9,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class RepositoryImpl  @Inject constructor(private val apiHelper: ApiHelper, private val dao: ForecastDao) : Repository {
+class UserRepositoryImpl  @Inject constructor(private val apiHelper: ApiHelper, private val dao: ForecastDao) : UserRepository {
 
     override suspend fun getForecasts(id: String, unit: String, appId: String): Response<ForecastResponse> {
         return apiHelper.getForecasts(id, unit, appId)
