@@ -15,4 +15,12 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideForecastDao(db: AppDatabase) = db.forecastDao()
+
+    @Singleton
+    @Provides
+    fun provideUserDao(db: AppDatabase) = db.userDao()
+
+    @Singleton
+    @Provides
+    fun provideLoginDao(db: AppDatabase) = db.loginDao()
 }

@@ -13,14 +13,16 @@ import com.prototype.exam.data.model.forecast.ForecastItem
 @TypeConverters(DataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun forecastDao(): ForecastDao
+    abstract fun userDao(): UserDao
+    abstract fun loginDao(): LoginDao
 
     companion object {
         @Volatile
-        private var forecastDb: AppDatabase? = null
+        private var database: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {
-            return forecastDb ?: synchronized(this) {
-                forecastDb ?: buildDatabase(context).also { forecastDb = it }
+            return database ?: synchronized(this) {
+                database ?: buildDatabase(context).also { database = it }
             }
         }
 
