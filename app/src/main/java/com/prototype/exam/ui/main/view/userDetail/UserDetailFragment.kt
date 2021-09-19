@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.maps.GoogleMap
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.forecast.ForecastItem
@@ -32,6 +33,8 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
     private var viewBinding: FragmentUserDetailBinding? = null
     private val binding get() = viewBinding!!
     private var locationId: String? = null
+    private lateinit var mMap : GoogleMap
+    private var mapReady = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

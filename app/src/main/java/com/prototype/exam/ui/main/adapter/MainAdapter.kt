@@ -16,7 +16,6 @@ class MainAdapter(private val users: ArrayList<User>, private val listener: OnIt
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         fun bind(user: User) {
             itemView.apply {
-
                 binding.textTemperature.text = user.name
                 binding.textLocation.text = user.company.companyName
                 binding.textWeather.text = user.address.city
