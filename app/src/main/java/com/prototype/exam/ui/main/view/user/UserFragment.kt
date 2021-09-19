@@ -13,13 +13,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.User
-import com.prototype.exam.data.model.forecast.ForecastItem
 import com.prototype.exam.databinding.FragmentUserBinding
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.adapter.MainAdapter
 import com.prototype.exam.ui.main.view.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserViewModel
-import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID
+import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
 import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.flow.collect
@@ -121,7 +120,7 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     override fun onItemClick(position: Int) {
         val user = adapter.getItem(position)
         val bundle = Bundle()
-        bundle.putString(BUNDLE_LOCATION_ID, user.id.toString())
+        bundle.putString(BUNDLE_USER_ID_KEY, user.id.toString())
         findNavController().navigate(
             R.id.action_UserFragment_to_UserDetailFragment,
             bundle

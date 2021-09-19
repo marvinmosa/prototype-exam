@@ -2,7 +2,6 @@ package com.prototype.exam.di.module
 
 import android.content.SharedPreferences
 import com.prototype.exam.data.api.ApiHelper
-import com.prototype.exam.data.db.ForecastDao
 import com.prototype.exam.data.db.LoginDao
 import com.prototype.exam.data.db.UserDao
 import com.prototype.exam.data.repository.LoginRepository

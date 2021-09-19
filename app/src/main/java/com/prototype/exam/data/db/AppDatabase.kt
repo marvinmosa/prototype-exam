@@ -4,15 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.prototype.exam.data.model.User
-import com.prototype.exam.data.model.forecast.ForecastItem
 
 
-@Database(entities = [ForecastItem::class, User::class], version = 1)
-@TypeConverters(DataConverter::class)
+@Database(entities = [User::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun forecastDao(): ForecastDao
     abstract fun userDao(): UserDao
     abstract fun loginDao(): LoginDao
 

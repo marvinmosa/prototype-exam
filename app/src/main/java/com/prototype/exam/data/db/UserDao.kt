@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.prototype.exam.data.model.User
-import com.prototype.exam.data.model.forecast.ForecastItem
 
 @Dao
 interface UserDao {

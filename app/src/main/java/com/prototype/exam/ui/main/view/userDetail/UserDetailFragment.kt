@@ -20,7 +20,7 @@ import com.prototype.exam.databinding.FragmentUserDetailBinding
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.view.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
-import com.prototype.exam.utils.Constants.BUNDLE_LOCATION_ID
+import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
 import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
@@ -47,7 +47,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserDetailViewModel::class.java)
         viewBinding = FragmentUserDetailBinding.inflate(inflater, container, false)
         val view = binding.root
-        locationId = arguments?.getString(BUNDLE_LOCATION_ID)
+        locationId = arguments?.getString(BUNDLE_USER_ID_KEY)
         locationId?.let { viewModel.fetchData(it.toInt()) }
 
         setupUi()
