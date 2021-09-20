@@ -36,7 +36,7 @@ class LoginRepositoryImpl @Inject constructor(
         val loginUser = dao.getLoginUser(username)
 
         if(loginUser === null) {
-            return  Result.error(Status.ERROR, "no registered user")
+            return  Result.error(Status.ERROR, "User does not exist")
         }
 
         return if(loginUser.password.compareTo(password)==0) {
