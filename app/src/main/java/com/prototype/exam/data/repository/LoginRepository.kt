@@ -1,10 +1,11 @@
 package com.prototype.exam.data.repository
 
-import com.prototype.exam.ui.main.view.login.data.Result
-import com.prototype.exam.ui.main.view.login.data.model.LoggedInUser
+import com.prototype.exam.utils.Result
+import com.prototype.exam.utils.Status
 
 interface LoginRepository {
     fun logout()
-    fun login(username: String, password: String): Result<LoggedInUser>
-    fun setLoggedInUser(loggedInUser: LoggedInUser)
+    fun login(username: String, password: String): Result<Status>
+    fun setLoggedInUser(uid: String)
+    fun addDummyUser()
 }

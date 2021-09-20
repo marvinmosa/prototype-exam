@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view.login.ui.login
+package com.prototype.exam.ui.main.view.login
 
 /**
  * User details post authentication that is exposed to the UI

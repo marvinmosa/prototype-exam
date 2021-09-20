@@ -1,32 +1,28 @@
 package com.prototype.exam.ui.main.view.login
 
-import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.App
-import com.prototype.exam.R
 import com.prototype.exam.databinding.ActivityLoginBinding
+import com.prototype.exam.ui.base.BaseActivity
 import com.prototype.exam.ui.main.view.UserActivity
-import com.prototype.exam.ui.main.view.login.ui.login.LoggedInUserView
-
 import com.prototype.exam.ui.main.viewModel.LoginViewModel
 import com.prototype.exam.utils.ViewModelFactory
 import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     @Inject
-    lateinit  var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
@@ -35,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
         App.appComponent.inject(this)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-
+        setContentView(binding.root)
 
         val username = binding.username
         val password = binding.password
@@ -44,11 +40,10 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
-        if(loginViewModel.isLoggedIn()) {
+        if (loginViewModel.isLoggedIn()) {
             startActivity(Intent(this, UserActivity::class.java))
+            finish()
         }
-
-        setContentView(binding.root)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -73,12 +68,8 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 startActivity(Intent(this, UserActivity::class.java))
-                updateUiWithUser(loginResult.success)
+                finish()
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         username.afterTextChanged {
@@ -112,17 +103,6 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

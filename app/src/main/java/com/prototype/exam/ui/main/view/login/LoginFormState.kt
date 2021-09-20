@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view.login.ui.login
+package com.prototype.exam.ui.main.view.login
 
 /**
  * Data validation state of the login form.

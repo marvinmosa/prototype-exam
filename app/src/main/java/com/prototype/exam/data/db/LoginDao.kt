@@ -1,27 +1,26 @@
 package com.prototype.exam.data.db
 
 import androidx.room.Dao
-import com.prototype.exam.ui.main.view.login.data.Result
-import com.prototype.exam.ui.main.view.login.data.model.LoggedInUser
-import java.io.IOException
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.prototype.exam.data.model.LoginUser
+import com.prototype.exam.data.model.User
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 @Dao
 interface LoginDao {
+    @Query("SELECT * FROM login ORDER BY id")
+    fun getLoginUsers(): List<LoginUser>
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        try {
-            // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)
-        } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
-        }
-    }
+    @Query("SELECT * FROM login WHERE username = :username")
+    fun getLoginUser(username: String): LoginUser
 
-    fun logout() {
-        // TODO: revoke authentication
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addLoginUsers(list: List<LoginUser>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addLoginUser(loginUser: LoginUser)
 }

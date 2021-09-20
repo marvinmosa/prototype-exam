@@ -2,19 +2,18 @@ package com.prototype.exam.data.repository
 
 import android.content.SharedPreferences
 import com.prototype.exam.data.db.LoginDao
-import com.prototype.exam.ui.main.view.login.data.Result
-import com.prototype.exam.ui.main.view.login.data.model.LoggedInUser
+import com.prototype.exam.data.model.LoginUser
+import com.prototype.exam.utils.Result
 import com.prototype.exam.utils.Constants.SHARED_PREFERENCE_LOGIN_KEY
+import com.prototype.exam.utils.Status
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val dao: LoginDao,
-    private val sharedPref: SharedPreferences
+    sharedPref: SharedPreferences
 ) : LoginRepository {
 
     private val _loginSharedPref = sharedPref
-
-    // in-memory cache of the loggedInUser object
     private var _user: String? = null
         private set
 
@@ -32,21 +31,31 @@ class LoginRepositoryImpl @Inject constructor(
         _user = null
     }
 
-    override fun login(username: String, password: String): Result<LoggedInUser> {
+    override fun login(username: String, password: String): Result<Status> {
         // handle login
-        val result = dao.login(username, password)
+        val loginUser = dao.getLoginUser(username)
 
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+        if(loginUser === null) {
+            return  Result.error(Status.ERROR, "no registered user")
         }
 
-        return result
+        return if(loginUser.password.compareTo(password)==0) {
+            setLoggedInUser(loginUser.id.toString())
+            Result.success(Status.SUCCESS)
+        } else {
+            Result.error(Status.ERROR, "invalid credentials")
+        }
     }
 
-    override fun setLoggedInUser(loggedInUser: LoggedInUser) {
-        _user = loggedInUser.displayName
+    override fun setLoggedInUser(uid: String) {
+        _user = uid
         _loginSharedPref.edit().putString(SHARED_PREFERENCE_LOGIN_KEY, _user).apply()
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
+    }
+
+    override fun addDummyUser() {
+        val user = LoginUser(1,"marvinmosa@test.com", "test123")
+        dao.addLoginUser(user)
     }
 }

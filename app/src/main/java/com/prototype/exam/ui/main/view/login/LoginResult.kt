@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view.login.ui.login
+package com.prototype.exam.ui.main.view.login
 
 /**
  * Authentication result : success (user details) or error message.
