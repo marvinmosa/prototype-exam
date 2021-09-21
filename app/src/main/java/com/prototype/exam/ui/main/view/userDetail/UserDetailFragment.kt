@@ -25,6 +25,12 @@ import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.google.android.gms.maps.CameraUpdate
+
+import com.google.android.gms.maps.model.LatLngBounds
+
+
+
 
 class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
 
@@ -77,9 +83,37 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
     private fun updateMap() {
         if (isMapReady) {
             geo?.let {
+
                 val sydney = LatLng(it.lat.toDouble(), it.lng.toDouble())
+
                 map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-                map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+
+                map.addMarker(MarkerOptions().position(LatLng(-35.0, 138.58)).title("Marker in Sydney"))
+                map.addMarker(MarkerOptions().position(LatLng(-34.9, 138.61)).title("Marker in Sydney"))
+
+
+
+
+                val builder = LatLngBounds.Builder()
+
+                builder.include(sydney)
+                builder.include(LatLng(-35.0, 138.58))
+                builder.include(LatLng(-34.9, 129.61))
+                  // NE bounds
+
+
+                val bounds = builder.build()
+
+                val width = resources.displayMetrics.widthPixels
+                val height = resources.displayMetrics.heightPixels
+                val padding = (width * 0.20).toInt()
+
+
+                val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
+               // map.setLatLngBoundsForCameraTarget(cameraUpdate)
+                map.uiSettings.isZoomControlsEnabled = true
+                map.animateCamera(cameraUpdate)
             }
         }
     }
