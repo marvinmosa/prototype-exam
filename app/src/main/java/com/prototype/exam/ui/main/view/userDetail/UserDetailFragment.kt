@@ -1,5 +1,6 @@
 package com.prototype.exam.ui.main.view.userDetail
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.prototype.exam.App
 import com.prototype.exam.R
@@ -25,14 +27,17 @@ import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.google.android.gms.maps.CameraUpdate
+import android.annotation.SuppressLint
 
-import com.google.android.gms.maps.model.LatLngBounds
-
-
+import android.location.LocationManager
 
 
-class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
+
+
+
+class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
+    GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -80,27 +85,33 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
         }
     }
 
+    override fun onMyLocationButtonClick(): Boolean {
+//        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        val locationProvider = LocationManager.NETWORK_PROVIDER
+//        // I suppressed the missing-permission warning because this wouldn't be executed in my
+//        // case without location services being enabled
+//        // I suppressed the missing-permission warning because this wouldn't be executed in my
+//        // case without location services being enabled
+//        @SuppressLint("MissingPermission") val lastKnownLocation =
+//            locationManager.getLastKnownLocation(locationProvider)
+//        val userLat = lastKnownLocation!!.latitude
+//        val userLong = lastKnownLocation!!.longitude
+        return false
+    }
+
+    override fun onMyLocationClick(p0: Location) {
+
+    }
+
     private fun updateMap() {
         if (isMapReady) {
             geo?.let {
-
                 val sydney = LatLng(it.lat.toDouble(), it.lng.toDouble())
 
                 map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-
-
-                map.addMarker(MarkerOptions().position(LatLng(-35.0, 138.58)).title("Marker in Sydney"))
-                map.addMarker(MarkerOptions().position(LatLng(-34.9, 138.61)).title("Marker in Sydney"))
-
-
-
-
                 val builder = LatLngBounds.Builder()
 
                 builder.include(sydney)
-                builder.include(LatLng(-35.0, 138.58))
-                builder.include(LatLng(-34.9, 129.61))
-                  // NE bounds
 
 
                 val bounds = builder.build()
@@ -110,9 +121,15 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail) {
                 val padding = (width * 0.20).toInt()
 
 
-                val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
-               // map.setLatLngBoundsForCameraTarget(cameraUpdate)
+                val cameraUpdate =
+                    CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
+                // map.setLatLngBoundsForCameraTarget(cameraUpdate)
+                map.isMyLocationEnabled = true
+                map.setOnMyLocationButtonClickListener(this)
+                map.setOnMyLocationClickListener(this)
                 map.uiSettings.isZoomControlsEnabled = true
+                map.uiSettings.isMapToolbarEnabled = false
+                map.uiSettings.isMyLocationButtonEnabled = true
                 map.animateCamera(cameraUpdate)
             }
         }
