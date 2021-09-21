@@ -1,5 +1,6 @@
 package com.prototype.exam.ui.main.view.userDetail
 
+import android.Manifest
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,11 +29,17 @@ import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.LOCATION_SERVICE
+import android.content.pm.PackageManager
 
 import android.location.LocationManager
-
-
-
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.gms.maps.CameraUpdate
+import com.prototype.exam.utils.Constants.MAP_ZOOM_LEVEL
 
 
 class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
@@ -48,6 +55,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     private lateinit var map: GoogleMap
     private var isMapReady = false
     private var geo: Geo? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,68 +79,80 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
         (activity as UserActivity).onShowBackButton(true)
     }
 
-    override fun setupUi() {
+    override fun onUserGranted() {
         setupMap()
+        updateMap()
     }
 
-    private fun setupMap() {
+    override fun onUserDenied() {
+        updateMap()
+    }
+
+    override fun setupUi() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
             map = googleMap
-            isMapReady = true
+            map.setOnMyLocationButtonClickListener(this)
+            map.setOnMyLocationClickListener(this)
+            map.uiSettings.isZoomControlsEnabled = true
+            map.uiSettings.isMapToolbarEnabled = false
+            map.uiSettings.isMyLocationButtonEnabled = true
+            setupMap()
             updateMap()
         }
     }
 
+    private fun setupMap() {
+        isMapReady = true
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        } else {
+            map.isMyLocationEnabled = true
+//            val locationManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
+//            val locationProvider = LocationManager.NETWORK_PROVIDER
+//            val lastKnownLocation =
+//                locationManager.getLastKnownLocation(locationProvider)
+        }
+    }
+
     override fun onMyLocationButtonClick(): Boolean {
-//        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//        val locationProvider = LocationManager.NETWORK_PROVIDER
-//        // I suppressed the missing-permission warning because this wouldn't be executed in my
-//        // case without location services being enabled
-//        // I suppressed the missing-permission warning because this wouldn't be executed in my
-//        // case without location services being enabled
-//        @SuppressLint("MissingPermission") val lastKnownLocation =
-//            locationManager.getLastKnownLocation(locationProvider)
-//        val userLat = lastKnownLocation!!.latitude
-//        val userLong = lastKnownLocation!!.longitude
         return false
     }
 
     override fun onMyLocationClick(p0: Location) {
-
+        //Do nothing
     }
 
     private fun updateMap() {
         if (isMapReady) {
             geo?.let {
-                val sydney = LatLng(it.lat.toDouble(), it.lng.toDouble())
+                val location = LatLng(it.lat.toDouble(), it.lng.toDouble())
+                map.addMarker(MarkerOptions().position(location))
+//                val builder = LatLngBounds.Builder()
+//                builder.include(LatLng(-35.0, 138.58))
+//                map.addMarker(MarkerOptions().position(LatLng(-35.0, 138.58)).title("Marker in Sydney"))
+//                builder.include(sydney)
+//                map.animateCamera(createCameraUpdate(builder.build()))
 
-                map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-                val builder = LatLngBounds.Builder()
-
-                builder.include(sydney)
-
-
-                val bounds = builder.build()
-
-                val width = resources.displayMetrics.widthPixels
-                val height = resources.displayMetrics.heightPixels
-                val padding = (width * 0.20).toInt()
-
-
-                val cameraUpdate =
-                    CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
-                // map.setLatLngBoundsForCameraTarget(cameraUpdate)
-                map.isMyLocationEnabled = true
-                map.setOnMyLocationButtonClickListener(this)
-                map.setOnMyLocationClickListener(this)
-                map.uiSettings.isZoomControlsEnabled = true
-                map.uiSettings.isMapToolbarEnabled = false
-                map.uiSettings.isMyLocationButtonEnabled = true
-                map.animateCamera(cameraUpdate)
+                val cu = CameraUpdateFactory.newLatLngZoom(location, MAP_ZOOM_LEVEL)
+                map.animateCamera(cu)
             }
         }
+    }
+
+    private fun createCameraUpdate(bounds: LatLngBounds): CameraUpdate {
+        val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels
+        val padding = (width * 0.20).toInt()
+        return CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
     }
 
     override fun setupObservers() {
@@ -140,7 +160,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
             it?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        result.data?.let { displayData(it) }
+                        result.data?.let { data -> displayData(data) }
                     }
                     Status.ERROR -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
