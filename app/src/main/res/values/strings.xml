@@ -19,4 +19,9 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+    //Error Strings
+    <string name="error_invalid_credentials">"Invalid Credentials"</string>
+    <string name="error_no_user">"User does not exist"</string>
+
+
 </resources>

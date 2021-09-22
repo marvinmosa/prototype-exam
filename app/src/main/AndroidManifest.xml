@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.view.UserActivity"
+            android:name=".ui.main.view.user.UserActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProtypeExam.NoActionBar"></activity>
     </application>

@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.App
 import com.prototype.exam.databinding.ActivityLoginBinding
 import com.prototype.exam.ui.base.BaseActivity
-import com.prototype.exam.ui.main.view.UserActivity
+import com.prototype.exam.ui.main.view.user.UserActivity
 import com.prototype.exam.ui.main.viewModel.LoginViewModel
 import com.prototype.exam.utils.ViewModelFactory
 import javax.inject.Inject

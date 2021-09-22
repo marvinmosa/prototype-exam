@@ -16,7 +16,6 @@ import com.prototype.exam.data.model.User
 import com.prototype.exam.databinding.FragmentUserBinding
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.adapter.MainAdapter
-import com.prototype.exam.ui.main.view.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
 import com.prototype.exam.utils.Status

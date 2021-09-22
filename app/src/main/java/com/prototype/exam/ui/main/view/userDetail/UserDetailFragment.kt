@@ -21,7 +21,7 @@ import com.prototype.exam.data.model.Geo
 import com.prototype.exam.data.model.User
 import com.prototype.exam.databinding.FragmentUserDetailBinding
 import com.prototype.exam.ui.base.BaseFragment
-import com.prototype.exam.ui.main.view.UserActivity
+import com.prototype.exam.ui.main.view.user.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
 import com.prototype.exam.utils.Constants.MAP_PADDING_PERCENTAGE

@@ -1,4 +1,4 @@
-package com.prototype.exam.ui.main.view
+package com.prototype.exam.ui.main.view.user
 
 import android.content.Intent
 import android.os.Bundle
