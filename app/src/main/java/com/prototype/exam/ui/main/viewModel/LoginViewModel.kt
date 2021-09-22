@@ -52,7 +52,6 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     }
 
     fun loginDataChanged(username: String, password: String) {
-        System.out.println("${isUserNameValid(username)}  ${isPasswordValid(password)}")
         if (!isUserNameValid(username) && isPasswordValid(password)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
         } else if (isUserNameValid(username) && !isPasswordValid(password)) {
@@ -64,14 +63,12 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         }
     }
 
-    // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(username).matches()
     }
 
-    // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+        return password.length > 4
     }
 
     private fun addDummyUser() {
