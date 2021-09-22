@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,8 +32,10 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     lateinit var viewModel: UserViewModel
     private lateinit var adapter: MainAdapter
 
-    private var viewBinding: FragmentUserBinding? = null
-    private val binding get() = viewBinding!!
+    private var _binding: FragmentUserBinding? = null
+    private val binding get() = _binding!!
+
+    private var userDetailFragmentContainer: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,17 +44,19 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     ): View {
         App.appComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
-        viewBinding = FragmentUserBinding.inflate(inflater, container, false)
-        val view = binding.root
+        _binding = FragmentUserBinding.inflate(inflater, container, false)
+
         setupUi()
         setupObservers()
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as UserActivity).onShowBackButton(false)
         (activity as UserActivity).setToolbarTitle(R.string.title_users)
+        userDetailFragmentContainer = view.findViewById(R.id.user_detail_nav_container)
+
     }
 
     override fun setupUi() {
@@ -113,18 +118,27 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewBinding = null
+        _binding = null
     }
 
 
     override fun onItemClick(position: Int) {
         val user = adapter.getItem(position)
         val bundle = Bundle()
+
         bundle.putString(BUNDLE_USER_ID_KEY, user.id.toString())
-        findNavController().navigate(
-            R.id.action_UserFragment_to_UserDetailFragment,
-            bundle
-        )
+
+        if (userDetailFragmentContainer != null) {
+            userDetailFragmentContainer?.findNavController()?.navigate(
+                R.id.UserDetailFragment,
+                bundle
+            )
+        } else {
+            findNavController().navigate(
+                R.id.action_UserFragment_to_UserDetailFragment,
+                bundle
+            )
+        }
     }
 
     override fun triggerErrorEvent(message: String) = lifecycleScope.launch {
