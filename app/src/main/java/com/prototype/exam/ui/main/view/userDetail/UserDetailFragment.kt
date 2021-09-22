@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
+class UserDetailFragment : BaseFragment(),
     GoogleMap.OnMyLocationButtonClickListener,
     GoogleMap.OnMyLocationClickListener {
 
@@ -63,12 +63,6 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
         setupUi()
         setupObservers()
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        (activity as UserActivity).onShowBackButton(true)
-        (activity as UserActivity).setToolbarTitle(R.string.title_user_detail)
     }
 
     override fun onUserGranted() {

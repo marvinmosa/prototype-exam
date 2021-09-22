@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 
 
-abstract class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId), PermissionCallback {
+abstract class BaseFragment: Fragment(), PermissionCallback {
 
     abstract fun setupUi()
     abstract fun setupObservers()

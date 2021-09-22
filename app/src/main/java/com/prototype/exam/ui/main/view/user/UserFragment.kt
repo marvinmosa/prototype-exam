@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemClickListener {
+class UserFragment : BaseFragment(), MainAdapter.OnItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -53,8 +53,6 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as UserActivity).onShowBackButton(false)
-        (activity as UserActivity).setToolbarTitle(R.string.title_users)
         userDetailFragmentContainer = view.findViewById(R.id.user_detail_nav_container)
 
     }
@@ -135,7 +133,7 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
             )
         } else {
             findNavController().navigate(
-                R.id.action_UserFragment_to_UserDetailFragment,
+                R.id.action_show_user_detail,
                 bundle
             )
         }

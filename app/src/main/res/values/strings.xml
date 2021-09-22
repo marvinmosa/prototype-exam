@@ -3,8 +3,8 @@
     <string name="action_logout">Logout</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Forecast Fragment</string>
-    <string name="second_fragment_label">Forecast Detail Fragment</string>
+    <string name="first_fragment_label">Users</string>
+    <string name="second_fragment_label">User Detail</string>
 
     <string name="unit_celsius">%1$s &#176;C</string>
     <string name="detail_hi_low_temp">High %1$s &#176;C / Low %2$s &#176;C</string>
@@ -27,6 +27,9 @@
     <string name="error_invalid_credentials">Invalid Credentials</string>
     <string name="error_no_user">User does not exist</string>
     <string name="error_location_permission_denied">Location Permission Denied!</string>
+    <string name="title_activity_item_detail_host">ItemDetailHostActivity</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 
 
 

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_user">
 
         <action
-            android:id="@+id/action_UserFragment_to_UserDetailFragment"
+            android:id="@+id/action_show_user_detail"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/slide_out"
             app:popEnterAnim="@anim/fade_in"
