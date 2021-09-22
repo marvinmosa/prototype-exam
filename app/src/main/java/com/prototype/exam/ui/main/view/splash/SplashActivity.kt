@@ -5,13 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.App
+import com.prototype.exam.ui.base.BaseActivity
 import com.prototype.exam.ui.main.view.login.LoginActivity
 import com.prototype.exam.ui.main.view.user.UserActivity
 import com.prototype.exam.ui.main.viewModel.SplashViewModel
 import com.prototype.exam.utils.ViewModelFactory
 import javax.inject.Inject
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var splashViewModel: SplashViewModel
@@ -33,4 +34,13 @@ class SplashActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    override fun setupUi() {
+        //Do nothing
+    }
+
+    override fun setupObservers() {
+        //Do nothing
+    }
+
 }

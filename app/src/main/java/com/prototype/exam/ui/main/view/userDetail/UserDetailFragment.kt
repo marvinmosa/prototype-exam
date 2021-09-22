@@ -11,10 +11,12 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.Geo
@@ -24,7 +26,6 @@ import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.view.user.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
-import com.prototype.exam.utils.Constants.MAP_PADDING_PERCENTAGE
 import com.prototype.exam.utils.Constants.MAP_ZOOM_LEVEL
 import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
@@ -34,8 +35,7 @@ import javax.inject.Inject
 
 class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener,
-    OnMapReadyCallback {
+    GoogleMap.OnMyLocationClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -70,25 +70,24 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
         (activity as UserActivity).onShowBackButton(true)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        setupMap()
-        updateMap()
-    }
-
     override fun onUserGranted() {
         setupMap()
         updateMap()
     }
 
     override fun onUserDenied() {
+        Snackbar.make(binding.root, "Location Permission Denied!", Snackbar.LENGTH_SHORT).show()
         updateMap()
     }
 
     override fun setupUi() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync { this }
+        mapFragment.getMapAsync { googleMap ->
+            map = googleMap
+            setupMap()
+            updateMap()
+        }
     }
 
     private fun setupMap() {
@@ -96,7 +95,8 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
@@ -104,10 +104,6 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
             requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
             map.isMyLocationEnabled = true
-//            val locationManager = requireContext().getSystemService(LOCATION_SERVICE) as LocationManager
-//            val locationProvider = LocationManager.NETWORK_PROVIDER
-//            val lastKnownLocation =
-//                locationManager.getLastKnownLocation(locationProvider)
         }
         map.setOnMyLocationButtonClickListener(this)
         map.setOnMyLocationClickListener(this)
@@ -129,23 +125,10 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
             geo?.let {
                 val location = LatLng(it.lat.toDouble(), it.lng.toDouble())
                 map.addMarker(MarkerOptions().position(location))
-//                val builder = LatLngBounds.Builder()
-//                builder.include(LatLng(-35.0, 138.58))
-//                map.addMarker(MarkerOptions().position(LatLng(-35.0, 138.58)).title("Marker in Sydney"))
-//                builder.include(sydney)
-//                map.animateCamera(createCameraUpdate(builder.build()))
-
                 val cu = CameraUpdateFactory.newLatLngZoom(location, MAP_ZOOM_LEVEL)
                 map.animateCamera(cu)
             }
         }
-    }
-
-    private fun createCameraUpdate(bounds: LatLngBounds): CameraUpdate {
-        val width = resources.displayMetrics.widthPixels
-        val height = resources.displayMetrics.heightPixels
-        val padding = (width * MAP_PADDING_PERCENTAGE).toInt()
-        return CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
     }
 
     override fun setupObservers() {

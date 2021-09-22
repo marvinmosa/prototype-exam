@@ -12,17 +12,26 @@ import com.prototype.exam.ui.main.view.login.LoginActivity
 import com.prototype.exam.utils.Constants
 
 class UserActivity : BaseActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.appComponent.inject(this)
+
+        setupUi()
+    }
+    override fun setupUi() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
     }
+
+    override fun setupObservers() {
+        //Do nothing
+    }
+
+
 
     fun onShowBackButton(isDisplay: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(isDisplay)
@@ -45,7 +54,7 @@ class UserActivity : BaseActivity() {
 
     private fun logout() : Boolean {
         val sharedPref = baseContext?.getSharedPreferences(Constants.SHARED_PREFERENCE_LOGIN, MODE_PRIVATE)
-        sharedPref?.let { it.edit().putString(Constants.SHARED_PREFERENCE_LOGIN_KEY, null).apply()  }
+        sharedPref?.edit()?.putString(Constants.SHARED_PREFERENCE_LOGIN_KEY, null)?.apply()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
         return true
