@@ -1,10 +1,12 @@
 package com.prototype.exam.ui.main.view.userDetail
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -23,7 +25,6 @@ import com.prototype.exam.data.model.Geo
 import com.prototype.exam.data.model.User
 import com.prototype.exam.databinding.FragmentUserDetailBinding
 import com.prototype.exam.ui.base.BaseFragment
-import com.prototype.exam.ui.main.view.user.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
 import com.prototype.exam.utils.Constants.MAP_ZOOM_LEVEL
@@ -71,13 +72,45 @@ class UserDetailFragment : BaseFragment(),
     }
 
     override fun onUserDenied() {
-        Snackbar.make(binding.root, R.string.error_location_permission_denied, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(
+            binding.root,
+            R.string.error_location_permission_denied,
+            Snackbar.LENGTH_SHORT
+        ).show()
         updateMap()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setupUi() {
         val mapFragment =
-            childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+            childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
+
+        binding.containerMap.visibility = View.VISIBLE
+
+        binding.imageTransparent.setOnTouchListener { _, event ->
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    // Disallow ScrollView to intercept touch events.
+                    binding.scrollview.requestDisallowInterceptTouchEvent(true)
+                    // Disable touch on transparent view
+                    false
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Allow ScrollView to intercept touch events.
+                    binding.scrollview.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    binding.scrollview.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+                else -> {
+                    true
+                }
+            }
+        }
+
         mapFragment.getMapAsync { googleMap ->
             map = googleMap
             setupMap()

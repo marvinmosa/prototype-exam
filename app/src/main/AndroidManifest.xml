@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HomeCreditExam">
+        android:theme="@style/Theme.ProtypeExam">
         <activity
             android:name=".ui.main.view.splash.SplashActivity"
             android:exported="true">

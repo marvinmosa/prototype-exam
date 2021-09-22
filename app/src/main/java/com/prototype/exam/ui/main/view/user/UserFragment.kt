@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -61,12 +62,10 @@ class UserFragment : BaseFragment(), MainAdapter.OnItemClickListener {
         binding.swipeRefresh.setOnRefreshListener { viewModel.fetchUsers() }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = MainAdapter(arrayListOf(), this)
-        binding.recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                binding.recyclerView.context,
-                (binding.recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
+
+        val divider = DividerItemDecoration(context,DividerItemDecoration.VERTICAL)
+        divider.setDrawable(getDrawable(requireContext(),R.drawable.item_layout_divider)!!)
+        binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.adapter = adapter
     }
 
