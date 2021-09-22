@@ -3,6 +3,7 @@ package com.prototype.exam.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.prototype.exam.ui.main.viewModel.LoginViewModel
+import com.prototype.exam.ui.main.viewModel.SplashViewModel
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.ui.main.viewModel.UserViewModel
 import com.prototype.exam.utils.ViewModelFactory
@@ -28,6 +29,10 @@ abstract class ViewModelModule {
     @ViewModelKey(LoginViewModel::class)
     internal abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    internal abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
