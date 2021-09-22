@@ -1,17 +1,17 @@
 package com.prototype.exam.ui.main.view.userDetail
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -24,34 +24,25 @@ import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.view.UserActivity
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
 import com.prototype.exam.utils.Constants.BUNDLE_USER_ID_KEY
+import com.prototype.exam.utils.Constants.MAP_PADDING_PERCENTAGE
+import com.prototype.exam.utils.Constants.MAP_ZOOM_LEVEL
 import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Context.LOCATION_SERVICE
-import android.content.pm.PackageManager
-
-import android.location.LocationManager
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.gms.maps.CameraUpdate
-import com.prototype.exam.utils.Constants.MAP_ZOOM_LEVEL
 
 
 class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener {
+    GoogleMap.OnMyLocationClickListener,
+    OnMapReadyCallback {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: UserDetailViewModel
     private var viewBinding: FragmentUserDetailBinding? = null
     private val binding get() = viewBinding!!
-    private var locationId: String? = null
+    private var userId: String? = null
     private lateinit var map: GoogleMap
     private var isMapReady = false
     private var geo: Geo? = null
@@ -66,8 +57,8 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
         viewModel = ViewModelProvider(this, viewModelFactory).get(UserDetailViewModel::class.java)
         viewBinding = FragmentUserDetailBinding.inflate(inflater, container, false)
         val view = binding.root
-        locationId = arguments?.getString(BUNDLE_USER_ID_KEY)
-        locationId?.let { viewModel.fetchData(it.toInt()) }
+        userId = arguments?.getString(BUNDLE_USER_ID_KEY)
+        userId?.let { viewModel.fetchData(it.toInt()) }
 
         setupUi()
         setupObservers()
@@ -77,6 +68,12 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as UserActivity).onShowBackButton(true)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        setupMap()
+        updateMap()
     }
 
     override fun onUserGranted() {
@@ -91,16 +88,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     override fun setupUi() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
-        mapFragment.getMapAsync { googleMap ->
-            map = googleMap
-            map.setOnMyLocationButtonClickListener(this)
-            map.setOnMyLocationClickListener(this)
-            map.uiSettings.isZoomControlsEnabled = true
-            map.uiSettings.isMapToolbarEnabled = false
-            map.uiSettings.isMyLocationButtonEnabled = true
-            setupMap()
-            updateMap()
-        }
+        mapFragment.getMapAsync { this }
     }
 
     private fun setupMap() {
@@ -121,6 +109,11 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
 //            val lastKnownLocation =
 //                locationManager.getLastKnownLocation(locationProvider)
         }
+        map.setOnMyLocationButtonClickListener(this)
+        map.setOnMyLocationClickListener(this)
+        map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isMapToolbarEnabled = false
+        map.uiSettings.isMyLocationButtonEnabled = true
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -151,7 +144,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     private fun createCameraUpdate(bounds: LatLngBounds): CameraUpdate {
         val width = resources.displayMetrics.widthPixels
         val height = resources.displayMetrics.heightPixels
-        val padding = (width * 0.20).toInt()
+        val padding = (width * MAP_PADDING_PERCENTAGE).toInt()
         return CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
     }
 
