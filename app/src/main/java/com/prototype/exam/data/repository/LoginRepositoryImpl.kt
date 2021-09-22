@@ -31,7 +31,7 @@ class LoginRepositoryImpl @Inject constructor(
         _user = null
     }
 
-    override fun login(username: String, password: String): Result<Status> {
+    override fun login(username: String, password: String, isSaved: Boolean): Result<Status> {
         // handle login
         val loginUser = dao.getLoginUser(username)
 
@@ -40,7 +40,7 @@ class LoginRepositoryImpl @Inject constructor(
         }
 
         return if(loginUser.password.compareTo(password)==0) {
-            setLoggedInUser(loginUser.id.toString())
+            if(isSaved) setLoggedInUser(loginUser.id.toString())
             Result.success(Status.SUCCESS)
         } else {
             Result.error(Status.ERROR, "invalid credentials")

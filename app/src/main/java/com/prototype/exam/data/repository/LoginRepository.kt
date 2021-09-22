@@ -5,7 +5,7 @@ import com.prototype.exam.utils.Status
 
 interface LoginRepository {
     fun logout()
-    fun login(username: String, password: String): Result<Status>
+    fun login(username: String, password: String, isSaved: Boolean): Result<Status>
     fun setLoggedInUser(uid: String)
     fun addDummyUser()
 }

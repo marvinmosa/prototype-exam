@@ -33,10 +33,10 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         return loginRepository.isLoggedIn
     }
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String, isSaved: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val result = loginRepository.login(username, password)
+                val result = loginRepository.login(username, password, isSaved)
 
                 withContext(Dispatchers.Main) {
                     if (result.data === Status.SUCCESS) {

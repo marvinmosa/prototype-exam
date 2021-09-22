@@ -39,9 +39,9 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupUi() {
-        username = binding.usernameLayout!!
-        password = binding.passwordLayout!!
-        login = binding.login
+        username = binding.usernameLayout
+        password = binding.passwordLayout
+        login = binding.btnLogin
 
         username.editText?.afterTextChanged {
             loginViewModel.loginDataChanged(
@@ -63,7 +63,8 @@ class LoginActivity : BaseActivity() {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
                             username.editText?.text.toString(),
-                            password.editText?.text.toString()
+                            password.editText?.text.toString(),
+                            binding.checkRememberMe.isChecked
                         )
                 }
                 false
@@ -73,7 +74,8 @@ class LoginActivity : BaseActivity() {
         login.setOnClickListener {
             loginViewModel.login(
                 username.editText?.text.toString(),
-                password.editText?.text.toString()
+                password.editText?.text.toString(),
+                binding.checkRememberMe.isChecked
             )
         }
     }
