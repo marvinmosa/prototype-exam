@@ -34,10 +34,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     }
 
     fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
         viewModelScope.launch {
-            //loading
-
             withContext(Dispatchers.IO) {
                 val result = loginRepository.login(username, password)
 
@@ -55,10 +52,13 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     }
 
     fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
+        System.out.println("${isUserNameValid(username)}  ${isPasswordValid(password)}")
+        if (!isUserNameValid(username) && isPasswordValid(password)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
+        } else if (isUserNameValid(username) && !isPasswordValid(password)) {
             _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+        } else if (!isUserNameValid(username) && !isPasswordValid(password)) {
+            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username, passwordError = R.string.invalid_password)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
@@ -66,11 +66,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        return Patterns.EMAIL_ADDRESS.matcher(username).matches()
     }
 
     // A placeholder password validation check
