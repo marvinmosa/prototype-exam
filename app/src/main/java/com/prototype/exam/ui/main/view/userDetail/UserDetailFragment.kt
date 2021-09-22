@@ -68,6 +68,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as UserActivity).onShowBackButton(true)
+        (activity as UserActivity).setToolbarTitle(R.string.title_user_detail)
     }
 
     override fun onUserGranted() {
@@ -76,7 +77,7 @@ class UserDetailFragment : BaseFragment(R.layout.fragment_user_detail),
     }
 
     override fun onUserDenied() {
-        Snackbar.make(binding.root, "Location Permission Denied!", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, R.string.error_location_permission_denied, Snackbar.LENGTH_SHORT).show()
         updateMap()
     }
 

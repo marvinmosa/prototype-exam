@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import com.prototype.exam.App
 import com.prototype.exam.R
@@ -31,7 +32,9 @@ class UserActivity : BaseActivity() {
         //Do nothing
     }
 
-
+    fun setToolbarTitle(@StringRes titleString: Int) {
+        supportActionBar?.title = resources.getString(titleString)
+    }
 
     fun onShowBackButton(isDisplay: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(isDisplay)

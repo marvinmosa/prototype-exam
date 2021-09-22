@@ -51,6 +51,7 @@ class UserFragment : BaseFragment(R.layout.fragment_user), MainAdapter.OnItemCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as UserActivity).onShowBackButton(false)
+        (activity as UserActivity).setToolbarTitle(R.string.title_users)
     }
 
     override fun setupUi() {
