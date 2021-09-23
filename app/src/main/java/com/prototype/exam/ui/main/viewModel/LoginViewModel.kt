@@ -29,10 +29,6 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         addDummyUser()
     }
 
-    fun isLoggedIn(): Boolean {
-        return loginRepository.isLoggedIn
-    }
-
     fun login(username: String, password: String, isSaved: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -57,7 +53,10 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         } else if (isUserNameValid(username) && !isPasswordValid(password)) {
             _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
         } else if (!isUserNameValid(username) && !isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username, passwordError = R.string.invalid_password)
+            _loginForm.value = LoginFormState(
+                usernameError = R.string.invalid_username,
+                passwordError = R.string.invalid_password
+            )
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
