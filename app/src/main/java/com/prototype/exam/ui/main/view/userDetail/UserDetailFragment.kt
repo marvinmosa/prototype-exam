@@ -85,8 +85,6 @@ class UserDetailFragment : BaseFragment(),
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
 
-        binding.containerMap.visibility = View.VISIBLE
-
         binding.imageTransparent.setOnTouchListener { _, event ->
             when (event.action) {
 
@@ -166,7 +164,8 @@ class UserDetailFragment : BaseFragment(),
                     Status.SUCCESS -> {
                         result.data?.let { data ->
                             binding.user = data
-                               //  displayData(data)
+                            geo = data.address.geo
+                            updateMap()
                           }
                     }
                     Status.ERROR -> {
@@ -178,15 +177,6 @@ class UserDetailFragment : BaseFragment(),
                 }
             }
         })
-    }
-
-    private fun displayData(user: User) {
-        binding.textCity.text = user.name
-        binding.textTemperature.text = user.username
-        binding.textTempRange.text = user.company.catchPhrase
-        binding.textWeather.text = user.address.suite
-        geo = user.address.geo
-        updateMap()
     }
 
     override fun triggerErrorEvent(message: String) = lifecycleScope.launch {

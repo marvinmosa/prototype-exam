@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.prototype.exam.ui.main.view.userDetail.UserDetailFragment">
-
     <data>
+        <import type="android.view.View" />
         <variable
             name="user"
             type="com.prototype.exam.data.model.User" />
@@ -17,7 +17,9 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -27,7 +29,7 @@
                     android:id="@+id/img_profile"
                     android:layout_width="@dimen/dp_144"
                     android:layout_height="@dimen/dp_144"
-                    android:layout_margin="@dimen/dp_144"
+                    android:layout_margin="@dimen/dp_20"
                     android:src="@drawable/ic_profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -37,31 +39,284 @@
                     android:id="@+id/text_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_45"
-                    android:layout_marginEnd="@dimen/dp_20"
-                    android:text="@{user.name}"
+                    android:text='@{user != null ? user.name : "-"}'
                     android:textSize="@dimen/sp_36"
                     android:textStyle="bold"
+                    android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_profile" />
 
-                <FrameLayout
-                    android:id="@+id/container_map"
+                <LinearLayout
+                    android:id="@+id/container_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_name">
+
+                    <ImageView
+                        android:id="@+id/ic_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_id_card"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{user.username}" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_username" />
+
+                <LinearLayout
+                    android:id="@+id/container_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_username">
+
+                    <ImageView
+                        android:id="@+id/ic_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_email"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{user.email}" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_email" />
+
+                <LinearLayout
+                    android:id="@+id/container_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_email">
+
+                    <ImageView
+                        android:id="@+id/ic_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_phone"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{user.phone}" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_number" />
+
+                <LinearLayout
+                    android:id="@+id/container_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_20"
+                    android:paddingTop="@dimen/dp_20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_number">
+
+                    <ImageView
+                        android:id="@+id/ic_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_home"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:text='@{@string/data_address(user.address.suite,user.address.street, user.address.city,user.address.zipcode)}' />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_address" />
+
+                <LinearLayout
+                    android:id="@+id/container_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_address">
+
+                    <ImageView
+                        android:id="@+id/ic_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_website"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{user.website}" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_website" />
+
+                <LinearLayout
+                    android:id="@+id/container_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_website">
+
+                    <ImageView
+                        android:id="@+id/ic_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_office"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{user.company.companyName}" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/gainsboro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_company" />
+
+                <LinearLayout
+                    android:id="@+id/container_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/border_company">
+
+                    <ImageView
+                        android:id="@+id/ic_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_location_marker"
+                        app:tint="@color/freezing" />
+
+                    <TextView
+                        android:id="@+id/text_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_20"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:text="@{@string/data_location(user.address.geo.lat, user.address.geo.lng)}" />
+                </LinearLayout>
+
+
+                <!--                    android:visibility='@{user != null ? View.VISIBLE : View.GONE}'-->
+                <FrameLayout
+                    android:id="@+id/container_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_45"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_20"
+                    android:clipToPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/container_location">
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragment_map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="480dp"
-                        android:layout_margin="20dp" />
+                        android:layout_height="320dp" />
 
                     <ImageView
                         android:id="@+id/image_transparent"
