@@ -21,4 +21,7 @@
     <color name="warm">#66BB6A</color>
     <color name="hot">#FF7043</color>
     <color name="gainsboro">#E6E6E6</color>
+
+    <color name="textDark">#262626</color>
+    <color name="textLightDark">#666666</color>
 </resources>

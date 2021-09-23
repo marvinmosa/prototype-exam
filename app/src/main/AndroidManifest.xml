@@ -29,6 +29,7 @@
         <activity
             android:name=".ui.main.view.login.LoginActivity"
             android:label="@string/title_activity_login"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/Theme.ProtypeExam.NoActionBar" />
         <activity
             android:name=".ui.main.view.user.UserActivity"
