@@ -63,8 +63,8 @@ class UserFragment : BaseFragment(), MainAdapter.OnItemClickListener {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = MainAdapter(arrayListOf(), this)
 
-        val divider = DividerItemDecoration(context,DividerItemDecoration.VERTICAL)
-        divider.setDrawable(getDrawable(requireContext(),R.drawable.item_layout_divider)!!)
+        val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        divider.setDrawable(getDrawable(requireContext(), R.drawable.item_layout_divider)!!)
         binding.recyclerView.addItemDecoration(divider)
         binding.recyclerView.adapter = adapter
     }

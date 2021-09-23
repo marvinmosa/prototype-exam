@@ -41,11 +41,9 @@ class UserViewModel @Inject constructor(
                                 _users.postValue(Result.success(it))
                             }
                         } else {
-                            System.out.println(response.message().toString())
                             _users.postValue(Result.error(null, response.message().toString()))
                         }
                     } catch (e: Exception) {
-                        System.out.println(e.message.toString())
                         _users.postValue(Result.error(null, e.message.toString()))
                     }
                 }

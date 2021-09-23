@@ -30,6 +30,4 @@ class UserDetailViewModel @Inject constructor(private val repository: UserReposi
             }
         }
     }
-
-
 }

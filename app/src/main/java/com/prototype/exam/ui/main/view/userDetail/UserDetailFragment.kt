@@ -22,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.prototype.exam.App
 import com.prototype.exam.R
 import com.prototype.exam.data.model.Geo
-import com.prototype.exam.data.model.User
 import com.prototype.exam.databinding.FragmentUserDetailBinding
 import com.prototype.exam.ui.base.BaseFragment
 import com.prototype.exam.ui.main.viewModel.UserDetailViewModel
@@ -84,7 +83,6 @@ class UserDetailFragment : BaseFragment(),
     override fun setupUi() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.fragment_map) as SupportMapFragment
-
         binding.imageTransparent.setOnTouchListener { _, event ->
             when (event.action) {
 
@@ -166,7 +164,7 @@ class UserDetailFragment : BaseFragment(),
                             binding.user = data
                             geo = data.address.geo
                             updateMap()
-                          }
+                        }
                     }
                     Status.ERROR -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
