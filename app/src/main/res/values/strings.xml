@@ -19,6 +19,7 @@
     <string name="invalid_password">Password must be at least 4 characters</string>
     <string name="login_failed">Login failed</string>
     <string name="text_placeholder">-</string>
+    <string name="login_remember_me">Remember me</string>
 
     //Titles
     <string name="title_users">Users</string>
