@@ -16,8 +16,7 @@ class MainAdapter(private val users: ArrayList<User>, private val listener: OnIt
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         fun bind(user: User) {
             itemView.apply {
-                binding.textTitle.text = user.name
-                binding.textSubtitle.text = user.company.companyName
+                binding.user = user
             }
         }
 

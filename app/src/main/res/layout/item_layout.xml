@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_item_layout"
-    >
+    xmlns:tools="http://schemas.android.com/tools" >
+    <data>
+        <variable
+            name="user"
+            type="com.prototype.exam.data.model.User" />
+    </data>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_title"
-        style="@style/TextAppearance.Exam.Title.Bold"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_24"
-        android:textColor="@color/textDark"
-        android:layout_marginTop="@dimen/dp_12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="temp" />
+        android:background="@drawable/bg_item_layout">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:textColor="@color/textLightDark"
-        style="@style/TextAppearance.Exam.Subtitle"
-        android:id="@+id/text_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_12"
-        android:layout_marginHorizontal="@dimen/dp_24"
-        app:layout_constraintTop_toTopOf="@id/text_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="location" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            style="@style/TextAppearance.Exam.Title.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_12"
+            android:textColor="@color/textDark"
+            android:text="@{user.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_subtitle"
+            style="@style/TextAppearance.Exam.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:textColor="@color/textLightDark"
+            android:text="@{user.company.companyName}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
