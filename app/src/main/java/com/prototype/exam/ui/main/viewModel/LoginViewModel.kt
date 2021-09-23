@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.prototype.exam.R
 import com.prototype.exam.data.repository.LoginRepositoryImpl
 import com.prototype.exam.ui.base.BaseViewModel
-import com.prototype.exam.ui.main.view.login.LoggedInUserView
 import com.prototype.exam.ui.main.view.login.LoginFormState
 import com.prototype.exam.ui.main.view.login.LoginResult
 import com.prototype.exam.utils.Status
@@ -36,11 +35,9 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
                 withContext(Dispatchers.Main) {
                     if (result.data === Status.SUCCESS) {
-                        _loginResult.value =
-                            LoginResult(success = LoggedInUserView(displayName = "Hello"))
+                        _loginResult.value = LoginResult(success = true)
                     } else {
-                        System.out.println(result.message)
-                        _loginResult.value = LoginResult(error = R.string.login_failed)
+                        _loginResult.value = LoginResult(success = false, error = result.message)
                     }
                 }
             }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -104,14 +105,15 @@ class LoginActivity : BaseActivity() {
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
-            if (loginResult.success != null) {
+            if (loginResult.success == true) {
                 startActivity(Intent(this, UserActivity::class.java))
                 finish()
             }
         })
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Snackbar.make(binding.root, errorString, Snackbar.LENGTH_LONG).show()
+    private fun showLoginFailed(errorString: String) {
+        Toast.makeText(this, errorString, Toast.LENGTH_SHORT).show()
+        //Snackbar.make(binding.root, errorString, Snackbar.LENGTH_LONG).show()
     }
 }
