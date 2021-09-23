@@ -3,6 +3,7 @@ package com.prototype.exam.ui.main.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.prototype.exam.data.api.ResultWrapper
 import com.prototype.exam.data.model.User
 import com.prototype.exam.data.repository.UserRepository
 import com.prototype.exam.ui.base.BaseViewModel
@@ -33,18 +34,22 @@ class UserViewModel @Inject constructor(
                 _users.postValue(Result.error(null, "No internet connection"))
             } else {
                 withContext(Dispatchers.IO) {
-                    try {
-                        val response = repository.getUsers()
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                repository.addUsers(it)
-                                _users.postValue(Result.success(it))
-                            }
-                        } else {
-                            _users.postValue(Result.error(null, response.message().toString()))
+                    when (val response = repository.getUsers()) {
+                        is ResultWrapper.NetworkError -> {
+                            _users.postValue(Result.error(null, "Something went wrong!!"))
                         }
-                    } catch (e: Exception) {
-                        _users.postValue(Result.error(null, e.message.toString()))
+                        is ResultWrapper.GenericError -> {
+                            response.error?.let {
+                                _users.postValue(Result.error(null, it.errorMessage))
+                            } ?: run {
+                                _users.postValue(Result.error(null, "Something went wrong!!"))
+                            }
+                        }
+                        is ResultWrapper.Success -> {
+                            val users = response.value
+                            users?.let { repository.addUsers(it.toList()) }
+                            _users.postValue(Result.success(users))
+                        }
                     }
                 }
             }
