@@ -10,20 +10,19 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_title"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#262626"
+        style="@style/TextAppearance.Exam.Title.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp_24"
+        android:textColor="@color/textDark"
         android:layout_marginTop="@dimen/dp_12"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="temp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:textSize="16sp"
-        android:textColor="#666666"
+        android:textColor="@color/textLightDark"
+        style="@style/TextAppearance.Exam.Subtitle"
         android:id="@+id/text_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -44,5 +44,13 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="TextAppearance.Exam.HeaderH3" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/sp_36</item>
+    </style>
+
+    <style name="TextAppearance.Exam.HeaderH3.Bold" parent="TextAppearance.Exam.HeaderH3">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

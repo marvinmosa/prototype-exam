@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.prototype.exam.ui.main.view.userDetail.UserDetailFragment">
+
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="user"
             type="com.prototype.exam.data.model.User" />
@@ -37,11 +40,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_name"
+                    style="@style/TextAppearance.Exam.HeaderH3.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{user != null ? user.name : "-"}'
-                    android:textSize="@dimen/sp_36"
-                    android:textStyle="bold"
+                    android:text='@{user != null ? user.name : @string/text_placeholder}'
                     android:textAlignment="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -62,17 +64,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_id_card"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_username"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{user.username}" />
+                        android:text="@{user != null ? user.username : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -99,17 +102,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_email"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_email"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{user.email}" />
+                        android:text="@{user != null ? user.email : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -136,17 +140,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_phone"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_number"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{user.phone}" />
+                        android:text="@{user != null ? user.phone : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -163,8 +168,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/dp_20"
                     android:paddingTop="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_20"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/border_number">
@@ -175,16 +180,17 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_home"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_address"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginEnd="@dimen/dp_20"
-                        android:text='@{@string/data_address(user.address.suite,user.address.street, user.address.city,user.address.zipcode)}' />
+                        android:text="@{user != null ? @string/data_address(user.address.suite,user.address.street, user.address.city,user.address.zipcode) : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -211,17 +217,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_website"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_website"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{user.website}" />
+                        android:text="@{user != null ? user.website : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -248,17 +255,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_office"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_company"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{user.company.companyName}" />
+                        android:text="@{user != null ? user.company.companyName : @string/text_placeholder}" />
                 </LinearLayout>
 
                 <View
@@ -285,17 +293,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_location_marker"
-                        app:tint="@color/freezing" />
+                        app:tint="@color/textLightDark" />
 
                     <TextView
                         android:id="@+id/text_location"
+                        style="@style/TextAppearance.Exam.Subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_20"
                         android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginStart="@dimen/dp_20"
-                        android:text="@{@string/data_location(user.address.geo.lat, user.address.geo.lng)}" />
+                        android:text="@{user != null ? @string/data_location(user.address.geo.lat, user.address.geo.lng) : @string/text_placeholder}" />
                 </LinearLayout>
 
 
@@ -306,8 +315,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_45"
                     android:layout_marginBottom="@dimen/dp_20"
-                    android:paddingBottom="@dimen/dp_20"
                     android:clipToPadding="true"
+                    android:paddingBottom="@dimen/dp_20"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/container_location">
