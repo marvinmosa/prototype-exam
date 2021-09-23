@@ -164,7 +164,10 @@ class UserDetailFragment : BaseFragment(),
             it?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        result.data?.let { data -> displayData(data) }
+                        result.data?.let { data ->
+                            binding.user = data
+                               //  displayData(data)
+                          }
                     }
                     Status.ERROR -> {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
