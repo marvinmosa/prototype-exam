@@ -8,22 +8,40 @@ import com.prototype.exam.data.repository.UserRepository
 import com.prototype.exam.ui.base.BaseViewModel
 import com.prototype.exam.utils.NetworkHelper
 import com.prototype.exam.utils.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 
 class UserViewModel @Inject constructor(
     private val repository: UserRepository,
     private val networkHelper: NetworkHelper
 ) : BaseViewModel() {
+    //create a new Job
+    private val parentJob = Job()
+    //create a coroutine context with the job and the dispatcher
+    private val coroutineContext : CoroutineContext get() = parentJob + Dispatchers.Default
+    //create a coroutine scope with the coroutine context
+    private val scope = CoroutineScope(coroutineContext)
+
     private val _users = MutableLiveData<Result<List<User>>>()
     val users: LiveData<Result<List<User>>>
         get() = _users
 
+    private val _users2 = MutableLiveData<MutableList<User>?>()
+    val users2: LiveData<MutableList<User>?>
+        get() = _users2
+
     init {
-        fetchUsers()
+        //fetchUsers()
+        fetchUsers2()
+    }
+
+     private fun fetchUsers2() {
+        scope.launch {
+            val latestUsers = repository.getUsers2()
+                _users2.postValue(latestUsers)
+        }
     }
 
     internal fun fetchUsers() {

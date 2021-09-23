@@ -33,4 +33,12 @@ class UserRepositoryImpl @Inject constructor(
     override fun getUser(id: Int): User {
         return dao.getUser(id)
     }
+
+    override suspend fun getUsers2(): MutableList<User>? {
+        return safeApiCall(
+            //await the result of deferred type
+            call = { apiHelper.getUsers2().await() },
+            error = "Error fetching news"
+        )?.toMutableList()
+    }
 }

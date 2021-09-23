@@ -1,6 +1,7 @@
 package com.prototype.exam.di.module
 
 import android.content.Context
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.prototype.exam.BuildConfig
 import com.prototype.exam.data.api.ApiHelper
 import com.prototype.exam.data.api.ApiHelperImpl
@@ -42,6 +43,7 @@ class NetworkModule {
         BASE_URL: String
     ): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()

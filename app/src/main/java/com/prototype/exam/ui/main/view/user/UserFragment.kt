@@ -24,6 +24,7 @@ import com.prototype.exam.utils.Status
 import com.prototype.exam.utils.ViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class UserFragment : BaseFragment(), MainAdapter.OnItemClickListener {
@@ -74,25 +75,30 @@ class UserFragment : BaseFragment(), MainAdapter.OnItemClickListener {
             retrieveList(it)
         })
 
-        viewModel.users.observe(requireActivity(), { it ->
-            it?.let { result ->
-                when (result.status) {
-                    Status.SUCCESS -> {
-                        binding.swipeRefresh.isRefreshing = false
-                        result.data?.let { response -> retrieveList(response) }
-                    }
-                    Status.ERROR -> {
-                        binding.swipeRefresh.isRefreshing = false
-                        it.message?.let {
-                            triggerErrorEvent(it)
-                        }
+//        viewModel.users.observe(requireActivity(), { it ->
+//            it?.let { result ->
+//                when (result.status) {
+//                    Status.SUCCESS -> {
+//                        binding.swipeRefresh.isRefreshing = false
+//                        result.data?.let { response -> retrieveList(response) }
+//                    }
+//                    Status.ERROR -> {
+//                        binding.swipeRefresh.isRefreshing = false
+//                        it.message?.let {
+//                            triggerErrorEvent(it)
+//                        }
+//
+//                    }
+//                    Status.LOADING -> {
+//                        binding.swipeRefresh.isRefreshing = true
+//                    }
+//                }
+//            }
+//        })
 
-                    }
-                    Status.LOADING -> {
-                        binding.swipeRefresh.isRefreshing = true
-                    }
-                }
-            }
+        viewModel.users2.observe(requireActivity(), { it ->
+            val listUser:List<User> = Collections.unmodifiableList(it)
+            retrieveList(listUser)
         })
 
         lifecycleScope.launchWhenStarted {
